@@ -1,0 +1,92 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gruppuppgiften JS 1</title>
+    <script type="text/javascript">
+//skapar en klass film
+    class Film {
+    constructor(title, year, genre, score, comment) {
+        this.title = title;
+        this.year = year;
+        this.genre = genre;
+        this.score = score;
+        this.comment = comment;
+    }
+
+//en toString metod som returnerar info om objektet
+toString() {
+    return "Year " + this.year + " I watched "+ this.title + " from the genre " + this.genre + " and I give it " + this.score + " out of 10. Here's a few words or keywords about it: " + this.comment + ".<br>";
+
+}
+    }
+
+    let film = [];
+
+
+    function addFilmToTheList() {
+        let newTitle = document.getElementById("title").value;
+        let newYear = document.getElementById("year").value;
+        let newGenre = document.getElementById("genre").value;
+        let newScore = document.getElementById("score").value;
+        let newComment = document.getElementById("comment").value;
+
+        film.push( new Film(newTitle, newYear, newGenre, newScore, newComment));
+
+        writeAllFilms();
+    }
+
+    function writeAllFilms() {
+        document.getElementById("output").innerHTML = "";
+
+        //loop för att skriva ut info om objektet
+
+        for (let i = 0; i < film.length; i++) {
+            document.getElementById("output").innerHTML += film[i].toString() + "<br>";
+        } 
+    }
+
+    
+    </script>
+</head>
+<body>
+    <h1>Don't forget about the films you've watched</h1>
+    <h2>Fill this list</h2>
+    <form>
+<div>
+    <label for="title">Do you remember the title of the film?</label>
+    <input id="title" type="text"><br>
+
+    <label for="year">When did you watch it?</label>
+    <input id="year" type="number"><br>
+
+    <label for="genre">What was the genre of the film?</label>
+    <input id="genre" type="text"><br>
+
+    <label for="score">What score would you give it, out of 10?</label>
+    <input id="score" type="text"><br>
+
+    <label for="comment">Write a few words or keywords so you remember the movie</label>
+    <input id="comment" type="text"><br>
+
+
+    <input type="button" id="btn" onclick="addFilmToTheList();" value="It's in the box!">
+</div>
+</form>
+    
+<div>
+    <p id="output"></p>
+</div>
+
+
+</body>
+
+<script type="text/javascript">
+
+    
+    
+    writeAllFilms();
+
+</script>
+</html>
