@@ -1,0 +1,201 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gruppuppgiften JS 1</title>
+    <script type="text/javascript">
+//skapar en klass film
+    class Film {
+    constructor(title, year, genre, score, comment) {
+        this.title = title;
+        this.year = year;
+        this.genre = genre;
+        this.score = score;
+        this.comment = comment;
+    }
+
+
+//en toString metod som returnerar info om objektet
+toString() {
+        return "Year " + this.year + " I watched "+ this.title + " from the genre " + this.genre + " and I give it " + this.score + " out of 10. Here's a few words or keywords about it: " + this.comment + ".<br>";
+    }
+
+    //en toString metod utan året
+toStringWithoutYear() {
+    return "I watched "+ this.title + " from the genre " + this.genre + " and I give it " + this.score + " out of 10. Here's a few words or keywords about it: " + this.comment + ".<br>";
+
+}
+
+    //en toString metod utan året
+toStringWithoutComment() {
+    return "Year " + this.year + " I watched "+ this.title + " from the genre " + this.genre + " and I give it " + this.score + " out of 10. <br>";
+
+
+}
+    }
+    
+    let film = [];    
+
+//gör en lista av info om filmen
+    function addFilmToTheList() {
+
+    let newTitle = document.getElementById("title").value;
+    let newYear = document.getElementById("year").value;
+    let newGenre = document.getElementById("genre").value;
+    let newScore = document.getElementById("score").value;
+    let newComment = document.getElementById("comment").value;
+        
+        if(!newTitle || !newGenre || !newScore) {
+        output.innerHTML = "Please write the name of the film, pick a genre and give it a score.";
+        return;
+    }
+
+
+
+        film.push( new Film(newTitle, newYear, newGenre, newScore, newComment));
+
+        setTimeout(() => {
+                output.innerHTML += `<p>Add another film to the list!</p>`
+            }, 5000);
+     
+            writeAllFilms();
+
+    }
+    
+    //skriva ut infon om filmen
+
+    function writeAllFilms() {
+        document.getElementById("output").innerHTML = "";
+    let newTitle = document.getElementById("title").value;
+    let newYear = document.getElementById("year").value;
+    let newGenre = document.getElementById("genre").value;
+    let newScore = document.getElementById("score").value;
+    let newComment = document.getElementById("comment").value;
+
+    
+            for (let i = 0; i < film.length; i++) {
+                document.getElementById("output").innerHTML += film[i].toString() + "<br>";
+    }
+        
+}
+        
+            
+    //initiera en funktion för att skriva ut en table
+    function drawTable() {
+            //initerar en output string variable
+            //border är en CSS stilregel
+            let strOutput = '<table style="border: solid 1px"><tr>';
+
+           //loop för att hämta attribut namn med en Forin loop
+        for (var x in film[0]) {
+            strOutput += `<th style = "border: solid 1px">${x}</th>`;
+        }
+
+
+        strOutput += "</tr>";
+        
+
+        //en loop för varje objekt i arrayen
+        film.forEach((item, i) => {
+            //lägga till <tr> tag
+            strOutput += "<tr>";
+
+
+                
+                //hämta värden för objektets attribut
+                for (var x in item) {
+                    strOutput += `<td style="border: solid 1px">${item[x]}</td>`;
+                }
+
+                //lägga till </tr> tag
+                strOutput += "</tr>";
+        });
+
+        //skriv ut strOutput till en div tag 
+        strOutput += "</table>";
+        document.getElementById("output").innerHTML = strOutput;
+    }
+            
+        
+        function addFilmInTable() {
+    let newTitle = document.getElementById("title").value;
+    let newYear = document.getElementById("year").value;
+    let newGenre = document.getElementById("genre").value;
+    let newScore = document.getElementById("score").value;
+    let newComment = document.getElementById("comment").value;
+
+            if(!newTitle || !newGenre || !newScore) {
+        output.innerHTML = "Please write the name of the film, pick a genre and give it a score.";
+        return;
+            }
+
+            //skapa ett objekt av klassen film
+            let objFilm = new Film(newTitle, newYear, newGenre, newScore, newComment);
+
+            //pusha in objektet till vår array
+            film.push( objFilm );
+
+            //anropa functionen drawtable
+            drawTable();
+        }
+    
+    </script>
+</head>
+<body>
+    <h1>Don't forget about the films you've watched</h1>
+    <h2>Fill this list</h2>
+    <form>
+<div>
+    <label for="title">Do you remember the title of the film?</label>
+    <input id="title" class="field" type="text" onfocus="this.value=''"><br>
+
+    <label for="year">When did you watch it?</label>
+    <input id="year" class="field" type="number" onfocus="this.value=''"><br>
+
+    <label for="genre">What was the genre of the film?</label>
+    <select name="genre" id="genre" onfocus="this.value=''">
+        <option value="" selected="selected">Select subject</option>
+      </select>
+
+    <label for="score">What score would you give it, out of 10?</label>
+    <input id="score" class="field" type="text" onfocus="this.value=''"><br>
+
+    <label for="comment">Write a few words or keywords so you remember the movie.</label>
+    <input id="comment" class="field" type="text" onfocus="this.value=''"><br>
+
+
+    <input type="button" id="btn" onclick="addFilmToTheList();" value="It's in the box!"><br><br>
+    <input type="button" id="btn" onclick="addFilmInTable();" value="Do you prefer a film table?"><br><br>
+</div>
+</form>
+    
+<div>
+    <p id="output"></p>
+</div>
+
+
+</body>
+
+<script type="text/javascript">
+
+let select = document.getElementById("genre"); 
+let options = ["Action", "Thriller", "Drama", "Comedy", "Horror", "Romcom", "Drama comedy", "Documentary", "TV-show"];
+for (var i = 0; i < options.length; i++) {
+    var optionsList = options[i];
+    var list = document.createElement("option");
+    list.textContent = optionsList;
+    list.value = optionsList;
+    select.appendChild(list);
+}
+
+
+
+    
+    film.push( new Film ("Gagarine", "2021", "Drama", "8", "A strong and political story on the notion of space in suburbs."));
+
+    writeAllFilms();
+    drawTable();
+
+</script>
+</html>
